@@ -9,6 +9,7 @@ public class StringGenerator
 {
   private Random random;
   private int offset = 'a';
+  private int bound = 26;
 
   public StringGenerator()
   {
@@ -33,7 +34,7 @@ public class StringGenerator
 
     for(int i = 0; i < length; i++)
     {
-      char c = (char) (random.nextInt(25) + offset);
+      char c = (char) (random.nextInt(bound) + offset);
       chars[i] = c;
     }
 
