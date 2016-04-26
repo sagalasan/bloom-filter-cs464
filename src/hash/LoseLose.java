@@ -10,4 +10,10 @@ public class LoseLose extends HashFunction
   {
     return 0;
   }
+
+  @Override
+  public int[] getkArray()
+  {
+    return new int[0];
+  }
 }

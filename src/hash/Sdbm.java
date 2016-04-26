@@ -10,4 +10,10 @@ public class Sdbm extends HashFunction
   {
     return 0;
   }
+
+  @Override
+  public int[] getkArray()
+  {
+    return new int[0];
+  }
 }
