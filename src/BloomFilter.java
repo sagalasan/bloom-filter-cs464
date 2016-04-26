@@ -12,7 +12,7 @@ public class BloomFilter
   public static final int STRING_LENGTH = 10;
   public static final int[] NUM_STRINGS = {100, 500, 1000, 5000, 10000, 50000, 100000, 500000};
 
-  private static final String fileName = "./strings/A.txt";
+  private static final String FILE_NAME = "./strings/A.txt";
 
   private List<List<String>> stringFamily;
   private StringGenerator stringGenerator;
@@ -44,7 +44,7 @@ public class BloomFilter
   public void loadStrings()
   {
     loadedStrings = new ArrayList<>();
-    try(BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName)))
+    try(BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_NAME)))
     {
       String line;
       while((line = bufferedReader.readLine()) != null)
@@ -63,13 +63,5 @@ public class BloomFilter
   {
     BloomFilter bloomFilter = new BloomFilter();
     bloomFilter.run();
-
-    List<List<String>> stringFamily = bloomFilter.getStringFamily();
-
-    for(int i = 0; i < stringFamily.size(); i++)
-    {
-      List<String> strings = stringFamily.get(i);
-      System.out.println(strings.size());
-    }
   }
 }
