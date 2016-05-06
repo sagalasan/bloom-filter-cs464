@@ -28,12 +28,7 @@ public class BloomFilter
 
   public void run()
   {
-    for(int i = 0; i < NUM_STRINGS.length; i++)
-    {
-      int numStrings = NUM_STRINGS[i];
-      List<String> strings = stringGenerator.generateStrings(STRING_LENGTH, numStrings);
-      stringFamily.add(strings);
-    }
+    generateStrings();
   }
 
   public List<List<String>> getStringFamily()
@@ -41,7 +36,7 @@ public class BloomFilter
     return stringFamily;
   }
 
-  public void loadStrings()
+  private void loadStrings()
   {
     loadedStrings = new ArrayList<>();
     try(BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_NAME)))
@@ -55,6 +50,16 @@ public class BloomFilter
     catch (IOException e)
     {
       e.printStackTrace();
+    }
+  }
+
+  private void generateStrings()
+  {
+    for(int i = 0; i < NUM_STRINGS.length; i++)
+    {
+      int numStrings = NUM_STRINGS[i];
+      List<String> strings = stringGenerator.generateStrings(STRING_LENGTH, numStrings);
+      stringFamily.add(strings);
     }
   }
 
