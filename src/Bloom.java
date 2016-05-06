@@ -1,4 +1,3 @@
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import hash.*;
 import org.apache.commons.io.FileUtils;
 
@@ -7,7 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -18,7 +16,6 @@ public class Bloom
 {
   private static final int STRING_LENGTH = 10;
   private static final int M = 10000;
-  private static final int K = 8;
   private static final int[] NUM_STRINGS = {100, 500, 1000, 5000, 10000, 50000, 100000, 500000};
 
   private static final int[] K_ARRAY = {5381, 6151, 8353, 1097, 2243, 367, 9341, 4157}; // length 8
@@ -105,7 +102,7 @@ public class Bloom
       djb2FalseArray[i] = falsePositives;
     }
 
-    System.out.println("\tChecking Sdbm bloom filters...");
+    System.out.println("\n\tChecking Sdbm bloom filters...");
     List<BloomFilter<Sdbm>> sdbmFilters = sdbmContainer.getBloomFilters();
     for(int i = 0; i < sdbmFilters.size(); i++)
     {
@@ -119,7 +116,7 @@ public class Bloom
       sdbmFalseArray[i] = falsePositives;
     }
 
-    System.out.println("\tChecking LoseLose bloom filters...");
+    System.out.println("\n\tChecking LoseLose bloom filters...");
     List<BloomFilter<LoseLose>> loseLoseFilters = loseLoseContainer.getBloomFilters();
     for(int i = 0; i < loseLoseFilters.size(); i++)
     {
@@ -129,7 +126,7 @@ public class Bloom
       loadSet.addAll(insertedStrings);
       BloomChecker<LoseLose> checker = new BloomChecker<>(loadedStrings, loadSet, bloomFilter);
       int falsePositives = checker.getNumberFalsePositives();
-      System.out.println("\tNumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
+      System.out.println("\n\tNumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
       loseloseFalseArray[i] = falsePositives;
     }
 
