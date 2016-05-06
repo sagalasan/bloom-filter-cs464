@@ -21,7 +21,7 @@ public class LoseLose extends AbstractHashFunction
       int c = (int) array[i];
       hash += c;
     }
-    return (hash % getM());
+    return Integer.remainderUnsigned((int) hash, getM());
   }
 
   public static class LoseLoseBuilder extends HashBuilder<LoseLose>

@@ -22,7 +22,7 @@ public class Sdbm extends AbstractHashFunction
       int c = (int) array[i];
       hash = c + (hash << 6) + (hash << 16) - hash;
     }
-    return (hash % getM());
+    return Integer.remainderUnsigned((int) hash, getM());
   }
 
   public static class SdbmBuilder extends HashBuilder<Sdbm>

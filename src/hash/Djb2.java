@@ -23,7 +23,7 @@ public class Djb2 extends AbstractHashFunction
       hash = ((hash << 5) + hash) + c;
     }
 
-    return (hash % getM());
+    return Integer.remainderUnsigned((int) hash, getM());
   }
 
   public static class Djb2Builder extends HashBuilder<Djb2>
