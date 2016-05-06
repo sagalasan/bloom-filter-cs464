@@ -11,6 +11,7 @@ public abstract class AbstractHashFunction
   public AbstractHashFunction(int k, int m)
   {
     this.k = k;
+    this.m = m;
   }
 
   public abstract long hash(String string);
