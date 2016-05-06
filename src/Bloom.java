@@ -126,7 +126,7 @@ public class Bloom
       loadSet.addAll(insertedStrings);
       BloomChecker<LoseLose> checker = new BloomChecker<>(loadedStrings, loadSet, bloomFilter);
       int falsePositives = checker.getNumberFalsePositives();
-      System.out.println("\n\tNumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
+      System.out.println("\tNumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
       loseloseFalseArray[i] = falsePositives;
     }
 
