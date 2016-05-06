@@ -13,6 +13,16 @@ public class Djb2 extends AbstractHashFunction
   @Override
   public long hash(String string)
   {
-    return 0;
+    long hash = getK();
+
+    char[] array = string.toCharArray();
+
+    for(int i = 0; i < array.length; i++)
+    {
+      int c = (int) array[i];
+      hash = ((hash << 5) + hash) + c;
+    }
+
+    return hash;
   }
 }
