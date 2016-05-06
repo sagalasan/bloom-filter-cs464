@@ -13,14 +13,11 @@ public class BloomFilter<T extends AbstractHashFunction>
   private int arraySize;
   private byte[] array;
 
-  private int numStrings;
-
   private List<T> hashFamily;
 
   private BloomFilter(BloomBuilder<T> bloomBuilder)
   {
     this.arraySize = bloomBuilder.arraySize;
-    this.numStrings = bloomBuilder.numStrings;
     this.hashFamily = bloomBuilder.hashFamily;
     init();
   }
@@ -62,13 +59,11 @@ public class BloomFilter<T extends AbstractHashFunction>
   public static class BloomBuilder<T extends AbstractHashFunction> implements Builder<BloomFilter<T>>
   {
     private int arraySize;
-    private int numStrings;
     private List<T> hashFamily;
 
-    public BloomBuilder(int arraySize, int numStrings, List<T> hashFamily)
+    public BloomBuilder(int arraySize, List<T> hashFamily)
     {
       this.arraySize = arraySize;
-      this.numStrings = numStrings;
       this.hashFamily = hashFamily;
     }
 

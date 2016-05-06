@@ -13,14 +13,14 @@ import java.util.List;
 public class FilterContainer<T extends AbstractHashFunction>
 {
   private List<BloomFilter<T>> bloomFilters;
-  private int[] numStrings;
+  private int numBloomFilters;
   private int[] kValues;
   private int mValue;
   private AbstractHashFunction.HashBuilder<T> hashBuilder;
 
-  public FilterContainer(AbstractHashFunction.HashBuilder<T> hashBuilder, int[] numStrings, int[] kValues, int mValue)
+  public FilterContainer(AbstractHashFunction.HashBuilder<T> hashBuilder, int numBloomFilters, int[] kValues, int mValue)
   {
-    this.numStrings = numStrings;
+    this.numBloomFilters = numBloomFilters;
     this.kValues = kValues;
     this.mValue = mValue;
     this.hashBuilder = hashBuilder;
@@ -39,9 +39,9 @@ public class FilterContainer<T extends AbstractHashFunction>
 
   private void generateBloomFilters()
   {
-    for(int numString : numStrings)
+    for(int i = 0; i < numBloomFilters; i++)
     {
-      bloomFilters.add(new BloomFilter.BloomBuilder<>(mValue, numString, generateHashFamily()).build());
+      bloomFilters.add(new BloomFilter.BloomBuilder<>(mValue, generateHashFamily()).build());
     }
   }
 

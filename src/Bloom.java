@@ -42,14 +42,17 @@ public class Bloom
 
   private void startInserts()
   {
+    for(int i = 0; i < stringFamily.size(); i++)
+    {
 
+    }
   }
 
   private void generateBloomFilters()
   {
-    FilterContainer<Djb2> djb2Container = new FilterContainer<>(new Djb2.Djb2Builder(), NUM_STRINGS, K_ARRAY, M);
-    FilterContainer<Sdbm> sdbmContainer = new FilterContainer<>(new Sdbm.SdbmBuilder(), NUM_STRINGS, K_ARRAY, M);
-    FilterContainer<LoseLose> loseLoseContainer = new FilterContainer<>(new LoseLose.LoseLoseBuilder(), NUM_STRINGS, K_ARRAY, M);
+    FilterContainer<Djb2> djb2Container = new FilterContainer<>(new Djb2.Djb2Builder(), NUM_STRINGS.length, K_ARRAY, M);
+    FilterContainer<Sdbm> sdbmContainer = new FilterContainer<>(new Sdbm.SdbmBuilder(), NUM_STRINGS.length, K_ARRAY, M);
+    FilterContainer<LoseLose> loseLoseContainer = new FilterContainer<>(new LoseLose.LoseLoseBuilder(), NUM_STRINGS.length, K_ARRAY, M);
 
     filterContainers.add(djb2Container);
     filterContainers.add(sdbmContainer);
