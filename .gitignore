@@ -3,6 +3,7 @@
 
 .idea/
 *.iml
+statistics
 
 # User-specific stuff:
 .idea/workspace.xml

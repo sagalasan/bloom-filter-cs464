@@ -1,3 +1,4 @@
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import hash.*;
 import org.apache.commons.io.FileUtils;
 
@@ -6,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -23,9 +25,9 @@ public class Bloom
 
   private static final String FILE_NAME = "./strings/A.txt";
   private static final String STAT_DIR = "./statistics/";
-  private static final String DJB2_CSV = STAT_DIR + "djb2.csv";
-  private static final String SDBM_CSV = STAT_DIR + "sdbm.csv";
-  private static final String LOSELOSE_CSV = STAT_DIR + "loselose.csv";
+  private static final String DJB2_TXT = STAT_DIR + "djb2.txt";
+  private static final String SDBM_TXT = STAT_DIR + "sdbm.txt";
+  private static final String LOSELOSE_TXT = STAT_DIR + "loselose.txt";
 
   private List<List<String>> stringFamily;
   private StringGenerator stringGenerator;
@@ -85,6 +87,10 @@ public class Bloom
 
   private void checkBloomFilters()
   {
+    int[] djb2FalseArray = new int[K_ARRAY.length];
+    int[] sdbmFalseArray = new int[K_ARRAY.length];
+    int[] loseloseFalseArray = new int[K_ARRAY.length];
+
     System.out.println("\tChecking Djb2 Bloom filters...");
     List<BloomFilter<Djb2>> djb2Filters = djb2Container.getBloomFilters();
     for(int i = 0; i < djb2Filters.size(); i++)
@@ -95,7 +101,8 @@ public class Bloom
       loadSet.addAll(insertedStrings);
       BloomChecker<Djb2> checker = new BloomChecker<>(loadedStrings, loadSet, bloomFilter);
       int falsePositives = checker.getNumberFalsePositives();
-      System.out.println("NumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
+      System.out.println("\tNumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
+      djb2FalseArray[i] = falsePositives;
     }
 
     System.out.println("\tChecking Sdbm bloom filters...");
@@ -108,7 +115,8 @@ public class Bloom
       loadSet.addAll(insertedStrings);
       BloomChecker<Sdbm> checker = new BloomChecker<>(loadedStrings, loadSet, bloomFilter);
       int falsePositives = checker.getNumberFalsePositives();
-      System.out.println("NumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
+      System.out.println("\tNumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
+      sdbmFalseArray[i] = falsePositives;
     }
 
     System.out.println("\tChecking LoseLose bloom filters...");
@@ -121,7 +129,30 @@ public class Bloom
       loadSet.addAll(insertedStrings);
       BloomChecker<LoseLose> checker = new BloomChecker<>(loadedStrings, loadSet, bloomFilter);
       int falsePositives = checker.getNumberFalsePositives();
-      System.out.println("NumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
+      System.out.println("\tNumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
+      loseloseFalseArray[i] = falsePositives;
+    }
+
+    writeFalseFile(DJB2_TXT, djb2FalseArray);
+    writeFalseFile(SDBM_TXT, sdbmFalseArray);
+    writeFalseFile(LOSELOSE_TXT, loseloseFalseArray);
+  }
+
+  private void writeFalseFile(String fileName, int[] array)
+  {
+    File file = new File(fileName);
+    String string = "";
+    for(int num : array)
+    {
+      string += num + "\n";
+    }
+    try
+    {
+      FileUtils.writeStringToFile(file, string);
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
     }
   }
 
