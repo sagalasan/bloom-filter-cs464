@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by christiaan on 4/25/16.
  */
-public class BloomFilter
+public class Bloom
 {
   public static final int STRING_LENGTH = 10;
   public static final int[] NUM_STRINGS = {100, 500, 1000, 5000, 10000, 50000, 100000, 500000};
@@ -19,7 +19,7 @@ public class BloomFilter
   private List<String> loadedStrings;
 
 
-  public BloomFilter()
+  public Bloom()
   {
     stringGenerator = new StringGenerator();
     stringFamily = new ArrayList<>();
@@ -66,7 +66,7 @@ public class BloomFilter
 
   public static void main(String[] args)
   {
-    BloomFilter bloomFilter = new BloomFilter();
-    bloomFilter.run();
+    Bloom bloom = new Bloom();
+    bloom.run();
   }
 }
