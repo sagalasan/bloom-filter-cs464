@@ -45,6 +45,11 @@ public class FilterContainer<T extends AbstractHashFunction>
     return arrays;
   }
 
+  public List<BloomFilter<T>> getBloomFilters()
+  {
+    return bloomFilters;
+  }
+
   private void generateBloomFilters()
   {
     for(int i = 0; i < numBloomFilters; i++)

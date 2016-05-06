@@ -1,9 +1,12 @@
 import hash.*;
+import org.apache.commons.io.FileUtils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -19,6 +22,10 @@ public class Bloom
   private static final int[] K_ARRAY = {5381, 6151, 8353, 1097, 2243, 367, 9341, 4157}; // length 8
 
   private static final String FILE_NAME = "./strings/A.txt";
+  private static final String STAT_DIR = "./statistics/";
+  private static final String DJB2_CSV = STAT_DIR + "djb2.csv";
+  private static final String SDBM_CSV = STAT_DIR + "sdbm.csv";
+  private static final String LOSELOSE_CSV = STAT_DIR + "loselose.csv";
 
   private List<List<String>> stringFamily;
   private StringGenerator stringGenerator;
@@ -37,6 +44,18 @@ public class Bloom
 
   public void run()
   {
+    File statDir = new File(STAT_DIR);
+    try
+    {
+      FileUtils.deleteDirectory(statDir);
+      FileUtils.forceMkdir(statDir);
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+
+    System.out.println("Num loaded strings: " + loadedStrings.size());
     System.out.println("Generating strings...");
     generateStrings();
 
@@ -46,8 +65,8 @@ public class Bloom
     System.out.println("Starting inserts...");
     startInserts();
 
-    System.out.println("Printing num bits set...");
-    printNumBitsSet();
+    System.out.println("Checking bloom filters...");
+    checkBloomFilters();
   }
 
   private void startInserts()
@@ -64,9 +83,46 @@ public class Bloom
     }
   }
 
-  private void printNumBitsSet()
+  private void checkBloomFilters()
   {
+    System.out.println("\tChecking Djb2 Bloom filters...");
+    List<BloomFilter<Djb2>> djb2Filters = djb2Container.getBloomFilters();
+    for(int i = 0; i < djb2Filters.size(); i++)
+    {
+      BloomFilter<Djb2> bloomFilter = djb2Filters.get(i);
+      List<String> insertedStrings = stringFamily.get(i);
+      HashSet<String> loadSet = new HashSet<>();
+      loadSet.addAll(insertedStrings);
+      BloomChecker<Djb2> checker = new BloomChecker<>(loadedStrings, loadSet, bloomFilter);
+      int falsePositives = checker.getNumberFalsePositives();
+      System.out.println("NumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
+    }
 
+    System.out.println("\tChecking Sdbm bloom filters...");
+    List<BloomFilter<Sdbm>> sdbmFilters = sdbmContainer.getBloomFilters();
+    for(int i = 0; i < sdbmFilters.size(); i++)
+    {
+      BloomFilter<Sdbm> bloomFilter = sdbmFilters.get(i);
+      List<String> insertedStrings = stringFamily.get(i);
+      HashSet<String> loadSet = new HashSet<>();
+      loadSet.addAll(insertedStrings);
+      BloomChecker<Sdbm> checker = new BloomChecker<>(loadedStrings, loadSet, bloomFilter);
+      int falsePositives = checker.getNumberFalsePositives();
+      System.out.println("NumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
+    }
+
+    System.out.println("\tChecking LoseLose bloom filters...");
+    List<BloomFilter<LoseLose>> loseLoseFilters = loseLoseContainer.getBloomFilters();
+    for(int i = 0; i < loseLoseFilters.size(); i++)
+    {
+      BloomFilter<LoseLose> bloomFilter = loseLoseFilters.get(i);
+      List<String> insertedStrings = stringFamily.get(i);
+      HashSet<String> loadSet = new HashSet<>();
+      loadSet.addAll(insertedStrings);
+      BloomChecker<LoseLose> checker = new BloomChecker<>(loadedStrings, loadSet, bloomFilter);
+      int falsePositives = checker.getNumberFalsePositives();
+      System.out.println("NumStrings: " + insertedStrings.size() + " False Positives: " + falsePositives);
+    }
   }
 
   private void generateBloomFilters()

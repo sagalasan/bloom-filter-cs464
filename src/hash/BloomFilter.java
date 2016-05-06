@@ -30,6 +30,33 @@ public class BloomFilter<T extends AbstractHashFunction>
     }
   }
 
+  public int[] getLocations(String string)
+  {
+    int[] locations = new int[hashFamily.size()];
+    for(int i = 0; i < hashFamily.size(); i++)
+    {
+      locations[i] = (int) hashFamily.get(i).hash(string);
+    }
+    return locations;
+  }
+
+  public boolean isPositive(int[] locations)
+  {
+    for(int i = 0; i < locations.length; i++)
+    {
+      int loc = locations[i];
+      if(loc < 0 || loc >= array.length)
+      {
+        throw new IllegalArgumentException("Position is out of bounds");
+      }
+      if(array[loc] != 1)
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
   public byte[] getByteArray()
   {
     return array;
