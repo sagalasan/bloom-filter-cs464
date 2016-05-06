@@ -9,14 +9,14 @@ import java.util.List;
  */
 public class BloomFilter<T extends AbstractHashFunction>
 {
-  private long arraySize;
+  private int arraySize;
   private byte[] array;
 
   private int stringLength;
 
   private T[] hashFamily;
 
-  public BloomFilter(long arraySize, int stringLength, T[] hashFamily)
+  public BloomFilter(int arraySize, int stringLength, T[] hashFamily)
   {
     this.arraySize = arraySize;
     this.stringLength = stringLength;
@@ -28,7 +28,7 @@ public class BloomFilter<T extends AbstractHashFunction>
   {
     for(T hashFunction : hashFamily)
     {
-      setBit(hashFunction.hash(string));
+      setBit((int) hashFunction.hash(string));
     }
   }
 
@@ -46,7 +46,7 @@ public class BloomFilter<T extends AbstractHashFunction>
     }
   }
 
-  private void setBit(long position)
+  private void setBit(int position)
   {
     if(position < 0 || position >= array.length)
     {
