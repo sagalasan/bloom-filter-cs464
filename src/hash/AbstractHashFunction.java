@@ -5,5 +5,17 @@ package hash;
  */
 public abstract class AbstractHashFunction
 {
-  public abstract long hash(String string, long k);
+  private int k;
+
+  public AbstractHashFunction(int k)
+  {
+    this.k = k;
+  }
+
+  public abstract long hash(String string);
+
+  public int getK()
+  {
+    return k;
+  }
 }

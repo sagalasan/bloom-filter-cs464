@@ -5,8 +5,13 @@ package hash;
  */
 public class Sdbm extends AbstractHashFunction
 {
+  public Sdbm(int k)
+  {
+    super(k);
+  }
+
   @Override
-  public long hash(String string, long k)
+  public long hash(String string)
   {
     return 0;
   }

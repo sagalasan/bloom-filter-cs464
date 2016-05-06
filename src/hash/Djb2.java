@@ -5,10 +5,14 @@ package hash;
  */
 public class Djb2 extends AbstractHashFunction
 {
+  public Djb2(int k)
+  {
+    super(k);
+  }
+
   @Override
-  public long hash(String string, long k)
+  public long hash(String string)
   {
     return 0;
   }
-
 }
