@@ -13,7 +13,14 @@ public class LoseLose extends AbstractHashFunction
   @Override
   public long hash(String string)
   {
-    return 0;
-  }
+    long hash = 0;
+    char[] array = string.toCharArray();
 
+    for(int i = 0; i < array.length; i++)
+    {
+      int c = (int) array[i];
+      hash += c;
+    }
+    return hash;
+  }
 }
