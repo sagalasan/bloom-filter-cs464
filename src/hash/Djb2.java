@@ -6,14 +6,9 @@ package hash;
 public class Djb2 extends AbstractHashFunction
 {
   @Override
-  public long hash(String string)
+  public long hash(String string, long k)
   {
     return 0;
   }
 
-  @Override
-  public int[] getkArray()
-  {
-    return new int[0];
-  }
 }

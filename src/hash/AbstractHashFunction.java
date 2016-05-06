@@ -5,7 +5,5 @@ package hash;
  */
 public abstract class AbstractHashFunction
 {
-  public abstract long hash(String string);
-
-  public abstract int[] getkArray();
+  public abstract long hash(String string, long k);
 }
