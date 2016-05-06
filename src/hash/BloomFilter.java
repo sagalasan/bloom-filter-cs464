@@ -24,9 +24,9 @@ public class BloomFilter<T extends AbstractHashFunction>
 
   public void insertString(String string)
   {
-    for(T hashFunction : hashFamily)
+    for(int i = 0; i < hashFamily.size(); i++)
     {
-      setBit((int) hashFunction.hash(string));
+      setBit((int) hashFamily.get(i).hash(string));
     }
   }
 
@@ -46,6 +46,7 @@ public class BloomFilter<T extends AbstractHashFunction>
 
   private void setBit(int position)
   {
+    //System.out.println(position);
     if(position < 0 || position >= array.length)
     {
       throw new IllegalArgumentException("Position is out of bounds");

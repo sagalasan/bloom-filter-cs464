@@ -30,13 +30,19 @@ public class Bloom
   {
     stringGenerator = new StringGenerator();
     stringFamily = new ArrayList<>();
+    filterContainers = new ArrayList<>();
     loadStrings();
   }
 
   public void run()
   {
+    System.out.println("Generating strings...");
     generateStrings();
+
+    System.out.println("Generating Bloom Filters...");
     generateBloomFilters();
+
+    System.out.println("Starting inserts...");
     startInserts();
   }
 
@@ -44,7 +50,14 @@ public class Bloom
   {
     for(int i = 0; i < stringFamily.size(); i++)
     {
-
+      for(int j = 0; j < stringFamily.get(i).size(); j++)
+      {
+        String string = stringFamily.get(i).get(j);
+        for(int k = 0; k < filterContainers.size(); k++)
+        {
+          filterContainers.get(k).insertString(i, string);
+        }
+      }
     }
   }
 

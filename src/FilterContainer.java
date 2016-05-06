@@ -1,6 +1,7 @@
 import hash.AbstractHashFunction;
 import hash.BloomFilter;
 import hash.Djb2;
+import hash.LoseLose;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -59,5 +60,10 @@ public class FilterContainer<T extends AbstractHashFunction>
   {
     int[] stringLens = {10, 20};
     int[] kValues = {1000, 2000};
+
+    FilterContainer<LoseLose> loseLoseContainer = new FilterContainer<>(new LoseLose.LoseLoseBuilder(), stringLens.length, kValues, 10);
+
+    System.out.println(loseLoseContainer.bloomFilters.size());
+
   }
 }

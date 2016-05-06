@@ -46,7 +46,7 @@ public class LoseLose extends AbstractHashFunction
     @Override
     public LoseLose build()
     {
-      return null;
+      return new LoseLose(this);
     }
   }
 }
