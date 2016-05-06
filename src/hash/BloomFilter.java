@@ -5,12 +5,12 @@ package hash;
  * We are not allowed to use any libraries so I am simulating a bit array with
  * a byte array for simplicity.
  */
-public class BitArray
+public class BloomFilter
 {
   private int arraySize;
   private byte[] array;
 
-  public BitArray(int arraySize)
+  public BloomFilter(int arraySize)
   {
     this.arraySize = arraySize;
     initArray();
