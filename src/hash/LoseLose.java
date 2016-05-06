@@ -5,9 +5,9 @@ package hash;
  */
 public class LoseLose extends AbstractHashFunction
 {
-  public LoseLose(int k, int m)
+  private LoseLose(LoseLoseBuilder loseLoseBuilder)
   {
-    super(k, m);
+    super(loseLoseBuilder.k, loseLoseBuilder.m);
   }
 
   @Override
@@ -22,5 +22,31 @@ public class LoseLose extends AbstractHashFunction
       hash += c;
     }
     return (hash % getM());
+  }
+
+  public static class LoseLoseBuilder extends HashBuilder<LoseLose>
+  {
+    private int k;
+    private int m;
+
+    @Override
+    public HashBuilder<LoseLose> addK(int k)
+    {
+      this.k = k;
+      return this;
+    }
+
+    @Override
+    public HashBuilder<LoseLose> addM(int m)
+    {
+      this.m = m;
+      return this;
+    }
+
+    @Override
+    public LoseLose build()
+    {
+      return null;
+    }
   }
 }

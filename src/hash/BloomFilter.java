@@ -1,5 +1,6 @@
 package hash;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,15 +13,15 @@ public class BloomFilter<T extends AbstractHashFunction>
   private int arraySize;
   private byte[] array;
 
-  private int stringLength;
+  private int numStrings;
 
-  private T[] hashFamily;
+  private List<T> hashFamily;
 
-  public BloomFilter(int arraySize, int stringLength, T[] hashFamily)
+  private BloomFilter(BloomBuilder<T> bloomBuilder)
   {
-    this.arraySize = arraySize;
-    this.stringLength = stringLength;
-    this.hashFamily = hashFamily;
+    this.arraySize = bloomBuilder.arraySize;
+    this.numStrings = bloomBuilder.numStrings;
+    this.hashFamily = bloomBuilder.hashFamily;
     init();
   }
 
@@ -56,5 +57,29 @@ public class BloomFilter<T extends AbstractHashFunction>
     {
       array[position] = 1;
     }
+  }
+
+  public static class BloomBuilder<T extends AbstractHashFunction> implements Builder<BloomFilter<T>>
+  {
+    private int arraySize;
+    private int numStrings;
+    private List<T> hashFamily;
+
+    public BloomBuilder(int arraySize, int numStrings, List<T> hashFamily)
+    {
+      this.arraySize = arraySize;
+      this.numStrings = numStrings;
+      this.hashFamily = hashFamily;
+    }
+
+    @Override
+    public BloomFilter<T> build()
+    {
+      return new BloomFilter<>(this);
+    }
+  }
+
+  public static void main(String[] args)
+  {
   }
 }

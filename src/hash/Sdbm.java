@@ -5,9 +5,9 @@ package hash;
  */
 public class Sdbm extends AbstractHashFunction
 {
-  public Sdbm(int k, int m)
+  private Sdbm(SdbmBuilder sdbmBuilder)
   {
-    super(k, m);
+    super(sdbmBuilder.k, sdbmBuilder.m);
   }
 
   @Override
@@ -23,5 +23,31 @@ public class Sdbm extends AbstractHashFunction
       hash = c + (hash << 6) + (hash << 16) - hash;
     }
     return (hash % getM());
+  }
+
+  public static class SdbmBuilder extends HashBuilder<Sdbm>
+  {
+    private int k;
+    private int m;
+
+    @Override
+    public HashBuilder<Sdbm> addK(int k)
+    {
+      this.k = k;
+      return this;
+    }
+
+    @Override
+    public HashBuilder<Sdbm> addM(int m)
+    {
+      this.m = m;
+      return this;
+    }
+
+    @Override
+    public Sdbm build()
+    {
+      return new Sdbm(this);
+    }
   }
 }

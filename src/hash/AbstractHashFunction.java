@@ -25,4 +25,10 @@ public abstract class AbstractHashFunction
   {
     return m;
   }
+
+  public static abstract class HashBuilder<T extends AbstractHashFunction> implements Builder<T>
+  {
+    public abstract HashBuilder<T> addK(int k);
+    public abstract HashBuilder<T> addM(int m);
+  }
 }

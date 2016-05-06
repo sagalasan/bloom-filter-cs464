@@ -5,9 +5,9 @@ package hash;
  */
 public class Djb2 extends AbstractHashFunction
 {
-  public Djb2(int k, int m)
+  private Djb2(Djb2Builder builder)
   {
-    super(k, m);
+    super(builder.k, builder.m);
   }
 
   @Override
@@ -24,5 +24,31 @@ public class Djb2 extends AbstractHashFunction
     }
 
     return (hash % getM());
+  }
+
+  public static class Djb2Builder extends HashBuilder<Djb2>
+  {
+    private int k;
+    private int m;
+
+    @Override
+    public HashBuilder<Djb2> addK(int k)
+    {
+      this.k = k;
+      return this;
+    }
+
+    @Override
+    public HashBuilder<Djb2> addM(int m)
+    {
+      this.m = m;
+      return this;
+    }
+
+    @Override
+    public Djb2 build()
+    {
+      return new Djb2(this);
+    }
   }
 }
