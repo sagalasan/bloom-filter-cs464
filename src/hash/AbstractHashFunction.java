@@ -6,8 +6,9 @@ package hash;
 public abstract class AbstractHashFunction
 {
   private int k;
+  private int m;
 
-  public AbstractHashFunction(int k)
+  public AbstractHashFunction(int k, int m)
   {
     this.k = k;
   }
@@ -17,5 +18,10 @@ public abstract class AbstractHashFunction
   public int getK()
   {
     return k;
+  }
+
+  public int getM()
+  {
+    return m;
   }
 }

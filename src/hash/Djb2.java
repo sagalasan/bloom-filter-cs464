@@ -5,9 +5,9 @@ package hash;
  */
 public class Djb2 extends AbstractHashFunction
 {
-  public Djb2(int k)
+  public Djb2(int k, int m)
   {
-    super(k);
+    super(k, m);
   }
 
   @Override
@@ -23,6 +23,6 @@ public class Djb2 extends AbstractHashFunction
       hash = ((hash << 5) + hash) + c;
     }
 
-    return hash;
+    return (hash % getM());
   }
 }

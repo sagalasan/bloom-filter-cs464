@@ -5,9 +5,9 @@ package hash;
  */
 public class Sdbm extends AbstractHashFunction
 {
-  public Sdbm(int k)
+  public Sdbm(int k, int m)
   {
-    super(k);
+    super(k, m);
   }
 
   @Override
@@ -22,6 +22,6 @@ public class Sdbm extends AbstractHashFunction
       int c = (int) array[i];
       hash = c + (hash << 6) + (hash << 16) - hash;
     }
-    return hash;
+    return (hash % getM());
   }
 }

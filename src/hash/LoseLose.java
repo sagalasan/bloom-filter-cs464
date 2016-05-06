@@ -5,9 +5,9 @@ package hash;
  */
 public class LoseLose extends AbstractHashFunction
 {
-  public LoseLose(int k)
+  public LoseLose(int k, int m)
   {
-    super(k);
+    super(k, m);
   }
 
   @Override
@@ -21,6 +21,6 @@ public class LoseLose extends AbstractHashFunction
       int c = (int) array[i];
       hash += c;
     }
-    return hash;
+    return (hash % getM());
   }
 }
