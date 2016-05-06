@@ -1,18 +1,36 @@
 package hash;
 
+import java.util.List;
+
 /**
- * This class simulates a bit array.
+ * This class simulates a bloom filter.
  * We are not allowed to use any libraries so I am simulating a bit array with
  * a byte array for simplicity.
  */
-public class BloomFilter
+public class BloomFilter<T extends AbstractHashFunction>
 {
   private int arraySize;
   private byte[] array;
 
-  public BloomFilter(int arraySize)
+  private int stringLength;
+
+  private T[] hashFamily;
+
+  public BloomFilter(int arraySize, int stringLength, T[] hashFamily)
   {
     this.arraySize = arraySize;
+    this.stringLength = stringLength;
+    this.hashFamily = hashFamily;
+    init();
+  }
+
+  public void insertString(String string)
+  {
+
+  }
+
+  private void init()
+  {
     initArray();
   }
 
@@ -25,7 +43,7 @@ public class BloomFilter
     }
   }
 
-  public void setBit(int position)
+  private void setBit(int position)
   {
     if(position < 0 || position >= array.length)
     {
