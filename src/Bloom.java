@@ -24,13 +24,14 @@ public class Bloom
   private StringGenerator stringGenerator;
   private List<String> loadedStrings;
 
-  private List<FilterContainer> filterContainers;
+  private FilterContainer<Djb2> djb2Container;
+  private FilterContainer<Sdbm> sdbmContainer;
+  private FilterContainer<LoseLose> loseLoseContainer;
 
   public Bloom()
   {
     stringGenerator = new StringGenerator();
     stringFamily = new ArrayList<>();
-    filterContainers = new ArrayList<>();
     loadStrings();
   }
 
@@ -44,6 +45,9 @@ public class Bloom
 
     System.out.println("Starting inserts...");
     startInserts();
+
+    System.out.println("Printing num bits set...");
+    printNumBitsSet();
   }
 
   private void startInserts()
@@ -53,23 +57,23 @@ public class Bloom
       for(int j = 0; j < stringFamily.get(i).size(); j++)
       {
         String string = stringFamily.get(i).get(j);
-        for(int k = 0; k < filterContainers.size(); k++)
-        {
-          filterContainers.get(k).insertString(i, string);
-        }
+        djb2Container.insertString(i, string);
+        sdbmContainer.insertString(i, string);
+        loseLoseContainer.insertString(i, string);
       }
     }
   }
 
+  private void printNumBitsSet()
+  {
+
+  }
+
   private void generateBloomFilters()
   {
-    FilterContainer<Djb2> djb2Container = new FilterContainer<>(new Djb2.Djb2Builder(), NUM_STRINGS.length, K_ARRAY, M);
-    FilterContainer<Sdbm> sdbmContainer = new FilterContainer<>(new Sdbm.SdbmBuilder(), NUM_STRINGS.length, K_ARRAY, M);
-    FilterContainer<LoseLose> loseLoseContainer = new FilterContainer<>(new LoseLose.LoseLoseBuilder(), NUM_STRINGS.length, K_ARRAY, M);
-
-    filterContainers.add(djb2Container);
-    filterContainers.add(sdbmContainer);
-    filterContainers.add(loseLoseContainer);
+    djb2Container = new FilterContainer<>(new Djb2.Djb2Builder(), NUM_STRINGS.length, K_ARRAY, M);
+    sdbmContainer = new FilterContainer<>(new Sdbm.SdbmBuilder(), NUM_STRINGS.length, K_ARRAY, M);
+    loseLoseContainer = new FilterContainer<>(new LoseLose.LoseLoseBuilder(), NUM_STRINGS.length, K_ARRAY, M);
   }
 
   public List<List<String>> getStringFamily()

@@ -35,6 +35,16 @@ public class FilterContainer<T extends AbstractHashFunction>
     bloomFilters.get(position).insertString(string);
   }
 
+  public List<byte[]> getByteArrays()
+  {
+    List<byte[]> arrays = new ArrayList<>();
+    for(int i = 0; i < bloomFilters.size(); i++)
+    {
+      arrays.add(bloomFilters.get(i).getByteArray());
+    }
+    return arrays;
+  }
+
   private void generateBloomFilters()
   {
     for(int i = 0; i < numBloomFilters; i++)

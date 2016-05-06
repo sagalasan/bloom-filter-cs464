@@ -30,6 +30,11 @@ public class BloomFilter<T extends AbstractHashFunction>
     }
   }
 
+  public byte[] getByteArray()
+  {
+    return array;
+  }
+
   private void init()
   {
     initArray();
