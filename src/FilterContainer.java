@@ -29,12 +29,9 @@ public class FilterContainer<T extends AbstractHashFunction>
     generateBloomFilters();
   }
 
-  public void insertString(String string)
+  public void insertString(int position, String string)
   {
-    for(BloomFilter bloomFilter : bloomFilters)
-    {
-      bloomFilter.insertString(string);
-    }
+    bloomFilters.get(position).insertString(string);
   }
 
   private void generateBloomFilters()
