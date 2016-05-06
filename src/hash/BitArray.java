@@ -7,16 +7,18 @@ package hash;
  */
 public class BitArray
 {
+  private int arraySize;
   private byte[] array;
 
   public BitArray(int arraySize)
   {
-    array = new byte[arraySize];
+    this.arraySize = arraySize;
     initArray();
   }
 
   private void initArray()
   {
+    array = new byte[arraySize];
     for(int i = 0; i < array.length; i++)
     {
       array[i] = 0;
