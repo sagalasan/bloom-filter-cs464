@@ -4,6 +4,7 @@
 .idea/
 *.iml
 statistics
+charts
 
 # User-specific stuff:
 .idea/workspace.xml
