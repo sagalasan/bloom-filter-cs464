@@ -1,3 +1,5 @@
+package bloom;
+
 import hash.*;
 import org.apache.commons.io.FileUtils;
 
@@ -46,7 +48,7 @@ public class Bloom
     System.out.println("Generating strings...");
     generateStrings();
 
-    System.out.println("Generating Bloom Filters...");
+    System.out.println("Generating bloom.Bloom Filters...");
     generateBloomFilters();
 
     System.out.println("Starting inserts...");
@@ -76,7 +78,7 @@ public class Bloom
     int[] sdbmFalseArray = new int[Constants.K_ARRAY.length];
     int[] loseloseFalseArray = new int[Constants.K_ARRAY.length];
 
-    System.out.println("\tChecking Djb2 Bloom filters...");
+    System.out.println("\tChecking Djb2 bloom.Bloom filters...");
     List<BloomFilter<Djb2>> djb2Filters = djb2Container.getBloomFilters();
     for(int i = 0; i < djb2Filters.size(); i++)
     {

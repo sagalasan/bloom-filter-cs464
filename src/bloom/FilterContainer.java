@@ -1,3 +1,5 @@
+package bloom;
+
 import hash.AbstractHashFunction;
 import hash.BloomFilter;
 import hash.LoseLose;
