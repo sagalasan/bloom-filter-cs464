@@ -13,6 +13,7 @@ public class Constants
 
   public static final String FILE_NAME = "./strings/A.txt";
   public static final String STAT_DIR = "./statistics/";
+  public static final String CHART_DIR = "./charts/";
   public static final String DJB2_TXT = STAT_DIR + "djb2.txt";
   public static final String SDBM_TXT = STAT_DIR + "sdbm.txt";
   public static final String LOSELOSE_TXT = STAT_DIR + "loselose.txt";
