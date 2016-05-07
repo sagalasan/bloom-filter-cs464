@@ -43,6 +43,7 @@ public class ChartManager
     }
 
     readFiles();
+    System.out.println("Generating charts...");
     generateCharts();
   }
 
@@ -66,6 +67,7 @@ public class ChartManager
         chartGenerator.addXName(Integer.toString(Constants.NUM_STRINGS[i]), Integer.parseInt(values.get(i)));
       }
       chartGenerator.generateAndSave(new File(name));
+      System.out.println("\t" + name);
     }
   }
 
