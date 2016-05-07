@@ -14,18 +14,6 @@ import java.util.List;
  */
 public class Bloom
 {
-  private static final int STRING_LENGTH = 10;
-  private static final int M = 10000;
-  private static final int[] NUM_STRINGS = {100, 500, 1000, 5000, 10000, 50000, 100000, 500000};
-
-  private static final int[] K_ARRAY = {5381, 6151, 8353, 1097, 2243, 367, 9341, 4157}; // length 8
-
-  private static final String FILE_NAME = "./strings/A.txt";
-  private static final String STAT_DIR = "./statistics/";
-  private static final String DJB2_TXT = STAT_DIR + "djb2.txt";
-  private static final String SDBM_TXT = STAT_DIR + "sdbm.txt";
-  private static final String LOSELOSE_TXT = STAT_DIR + "loselose.txt";
-
   private List<List<String>> stringFamily;
   private StringGenerator stringGenerator;
   private List<String> loadedStrings;
@@ -43,7 +31,7 @@ public class Bloom
 
   public void run()
   {
-    File statDir = new File(STAT_DIR);
+    File statDir = new File(Constants.STAT_DIR);
     try
     {
       FileUtils.deleteDirectory(statDir);
@@ -84,9 +72,9 @@ public class Bloom
 
   private void checkBloomFilters()
   {
-    int[] djb2FalseArray = new int[K_ARRAY.length];
-    int[] sdbmFalseArray = new int[K_ARRAY.length];
-    int[] loseloseFalseArray = new int[K_ARRAY.length];
+    int[] djb2FalseArray = new int[Constants.K_ARRAY.length];
+    int[] sdbmFalseArray = new int[Constants.K_ARRAY.length];
+    int[] loseloseFalseArray = new int[Constants.K_ARRAY.length];
 
     System.out.println("\tChecking Djb2 Bloom filters...");
     List<BloomFilter<Djb2>> djb2Filters = djb2Container.getBloomFilters();
@@ -130,9 +118,9 @@ public class Bloom
       loseloseFalseArray[i] = falsePositives;
     }
 
-    writeFalseFile(DJB2_TXT, djb2FalseArray);
-    writeFalseFile(SDBM_TXT, sdbmFalseArray);
-    writeFalseFile(LOSELOSE_TXT, loseloseFalseArray);
+    writeFalseFile(Constants.DJB2_TXT, djb2FalseArray);
+    writeFalseFile(Constants.SDBM_TXT, sdbmFalseArray);
+    writeFalseFile(Constants.LOSELOSE_TXT, loseloseFalseArray);
   }
 
   private void writeFalseFile(String fileName, int[] array)
@@ -155,9 +143,12 @@ public class Bloom
 
   private void generateBloomFilters()
   {
-    djb2Container = new FilterContainer<>(new Djb2.Djb2Builder(), NUM_STRINGS.length, K_ARRAY, M);
-    sdbmContainer = new FilterContainer<>(new Sdbm.SdbmBuilder(), NUM_STRINGS.length, K_ARRAY, M);
-    loseLoseContainer = new FilterContainer<>(new LoseLose.LoseLoseBuilder(), NUM_STRINGS.length, K_ARRAY, M);
+    djb2Container = new FilterContainer<>(new Djb2.Djb2Builder(), Constants.NUM_STRINGS.length,
+            Constants.K_ARRAY, Constants.M);
+    sdbmContainer = new FilterContainer<>(new Sdbm.SdbmBuilder(), Constants.NUM_STRINGS.length,
+            Constants.K_ARRAY, Constants.M);
+    loseLoseContainer = new FilterContainer<>(new LoseLose.LoseLoseBuilder(), Constants.NUM_STRINGS.length,
+            Constants.K_ARRAY, Constants.M);
   }
 
   public List<List<String>> getStringFamily()
@@ -168,7 +159,7 @@ public class Bloom
   private void loadStrings()
   {
     loadedStrings = new ArrayList<>();
-    try(BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_NAME)))
+    try(BufferedReader bufferedReader = new BufferedReader(new FileReader(Constants.FILE_NAME)))
     {
       String line;
       while((line = bufferedReader.readLine()) != null)
@@ -184,10 +175,10 @@ public class Bloom
 
   private void generateStrings()
   {
-    for(int i = 0; i < NUM_STRINGS.length; i++)
+    for(int i = 0; i < Constants.NUM_STRINGS.length; i++)
     {
-      int numStrings = NUM_STRINGS[i];
-      List<String> strings = stringGenerator.generateStrings(STRING_LENGTH, numStrings);
+      int numStrings = Constants.NUM_STRINGS[i];
+      List<String> strings = stringGenerator.generateStrings(Constants.STRING_LENGTH, numStrings);
       stringFamily.add(strings);
     }
   }
