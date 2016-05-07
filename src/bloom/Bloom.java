@@ -1,5 +1,6 @@
 package bloom;
 
+import chart.ChartManager;
 import hash.*;
 import org.apache.commons.io.FileUtils;
 
@@ -190,5 +191,7 @@ public class Bloom
   {
     Bloom bloom = new Bloom();
     bloom.run();
+    ChartManager chartManager = new ChartManager();
+    chartManager.run();
   }
 }
